@@ -4,10 +4,13 @@
 #include <imgui.h>
 
 #include <imgui_impl_win32.h>
-#include <imgui_impl_dx11.h>
+#include <imgui_impl_dx12.h>
 
-namespace Growing::GUI {
-    ImGuiMan::ImGuiMan() {
+#include "Platform/Platform.h"
+#include "Graphics/GraphicsContext.h"
+
+namespace Developing::GUI {
+    ImGuiMan::ImGuiMan(Platform::Platform& platform, Graphics::GraphicsContext& gfx) {
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
@@ -32,17 +35,18 @@ namespace Growing::GUI {
         }
 
         // Setup Platform/Renderer backends
-        ImGui_ImplWin32_Init(Platform::GetNativeWnd());
-        ImGui_ImplDX11_Init(
-            static_cast<ID3D11Device*>(RenderContext::GetImplDevice()), 
-            static_cast<ID3D11DeviceContext*>(RenderContext::GetImplContext())
+        ImGui_ImplWin32_Init(platform.GetNativeWnd());
+        /*
+        ImGui_ImplDX12_Init(
+            gfx.GetDevice(),
+            gfx.GetNumOfBackBuffers(),
         );
+        */
+
+        //imguiEnabled = true;
     }
 
     ImGuiMan::~ImGuiMan() {
-        ImGui_ImplDX11_Shutdown();
-        ImGui_ImplWin32_Shutdown();
-        ImGui::DestroyContext();
     }
 
     void ImGuiMan::BeginFrame() {

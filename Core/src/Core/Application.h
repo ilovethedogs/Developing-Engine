@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Growing {
+namespace Developing {
     namespace Platform {
         class Platform;
     }

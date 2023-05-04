@@ -23,7 +23,7 @@
 
 #include "Core/Log.h"
 
-#ifdef GW_PLATFORM_WINDOWS
+#ifdef PLATFORM_WINDOWS
     // target Windows 10 or later
     #define _WIN32_WINNT 0x0A00
     #include <sdkddkver.h>
@@ -68,7 +68,6 @@
 	#include <Windows.h>
     #include <wrl.h>
     #include <DirectxMath.h>
-    #include <dxgiformat.h>
 
     // For UTF converter...
     #define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING

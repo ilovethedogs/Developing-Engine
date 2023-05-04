@@ -58,7 +58,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-      <PreprocessorDefinitions>GW_PLATFORM_WINDOWS;GW_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PLATFORM_WINDOWS;DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
@@ -78,7 +78,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>d3d11.lib;dxguid.lib;D3DCompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d12.lib;dxgi.lib;dxguid.lib;D3DCompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -86,7 +86,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>GW_PLATFORM_WINDOWS;GW_DEBUG=0;GW_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PLATFORM_WINDOWS;DEBUG=0;RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -104,32 +104,60 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>d3d11.lib;dxguid.lib;D3DCompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d12.lib;dxgi.lib;dxguid.lib;D3DCompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Application.h" />
+    <ClInclude Include="src\Core\Core.h" />
+    <ClInclude Include="src\Core\Exception.h" />
     <ClInclude Include="src\Core\Log.h" />
+    <ClInclude Include="src\DSAL\EventQueue.h" />
+    <ClInclude Include="src\Graphics\DirectX12\DescriptorHeapTemplate.h" />
     <ClInclude Include="src\GUI\ImGuiMan.h" />
+    <ClInclude Include="src\Graphics\DirectX12\CommandQueue.h" />
+    <ClInclude Include="src\Graphics\DirectX12\DescriptorHeap.h" />
+    <ClInclude Include="src\Graphics\DirectX12\Fence.h" />
+    <ClInclude Include="src\Graphics\DirectX12\GraphicsDevice.h" />
+    <ClInclude Include="src\Graphics\DirectX12\SwapChain.h" />
     <ClInclude Include="src\Graphics\GraphicsContext.h" />
-    <ClInclude Include="src\Graphics\GraphicsDevice.h" />
     <ClInclude Include="src\Graphics\SceneGraph\SceneGraph.h" />
+    <ClInclude Include="src\Input\InputHandler.h" />
+    <ClInclude Include="src\Input\RawInputHandler.h" />
     <ClInclude Include="src\Platform\Platform.h" />
-    <ClInclude Include="src\Platform\Windows\PlatformWin32.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp" />
+    <ClCompile Include="src\Core\Exception.cpp" />
     <ClCompile Include="src\Core\Log.cpp" />
+    <ClCompile Include="src\DSAL\EventQueue.cpp" />
     <ClCompile Include="src\GUI\ImGuiMan.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\CommandQueue.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\DescriptorHeap.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\Fence.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\GraphicsDevice.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\SwapChain.cpp" />
     <ClCompile Include="src\Graphics\GraphicsContext.cpp" />
-    <ClCompile Include="src\Graphics\GraphicsDevice.cpp" />
     <ClCompile Include="src\Graphics\SceneGraph\SceneGraph.cpp" />
+    <ClCompile Include="src\Input\InputHandler.cpp" />
+    <ClCompile Include="src\Input\RawInputHandler.cpp" />
     <ClCompile Include="src\Platform\Platform.cpp" />
-    <ClCompile Include="src\Platform\Windows\PlatformWin32.cpp" />
-    <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\Microsoft.Direct3D.D3D12.1.610.2\build\native\Microsoft.Direct3D.D3D12.targets" Condition="Exists('..\packages\Microsoft.Direct3D.D3D12.1.610.2\build\native\Microsoft.Direct3D.D3D12.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Direct3D.D3D12.1.610.2\build\native\Microsoft.Direct3D.D3D12.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Direct3D.D3D12.1.610.2\build\native\Microsoft.Direct3D.D3D12.targets'))" />
+  </Target>
 </Project>

@@ -1,77 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Core">
-      <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GUI">
-      <UniqueIdentifier>{2AEC870B-96F5-877C-1F71-9E7C8B79937C}</UniqueIdentifier>
+    <Filter Include="src\Core">
+      <UniqueIdentifier>{A5D31CCF-91A0-77DA-BAB9-6582A6E5AC68}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics">
-      <UniqueIdentifier>{1653CE33-0220-293F-2B39-17E717655ECD}</UniqueIdentifier>
+    <Filter Include="src\DSAL">
+      <UniqueIdentifier>{80E21CCF-6CAF-77DA-95C8-658281F4AC68}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\SceneGraph">
-      <UniqueIdentifier>{059B2DA5-71FC-0AB3-FA69-516566CA4172}</UniqueIdentifier>
+    <Filter Include="src\GUI">
+      <UniqueIdentifier>{C1782FA9-2D58-AE44-3670-391BA2CE14A6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform">
-      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    <Filter Include="src\Graphics">
+      <UniqueIdentifier>{0D564864-F9B8-D708-A23E-10BF8E80A38B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform\Windows">
-      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    <Filter Include="src\Graphics\DirectX12">
+      <UniqueIdentifier>{12AC2819-FEA5-516B-E712-E87BD3ABB7D7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Graphics\SceneGraph">
+      <UniqueIdentifier>{9C75F176-08AD-390E-11B7-9D317D6D6007}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Input">
+      <UniqueIdentifier>{EC4823B3-58B3-D729-A1F1-88CF0D9BB57E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform">
+      <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Application.h">
-      <Filter>Core</Filter>
+      <Filter>src\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Core.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Exception.h">
+      <Filter>src\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Log.h">
-      <Filter>Core</Filter>
+      <Filter>src\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DSAL\EventQueue.h">
+      <Filter>src\DSAL</Filter>
     </ClInclude>
     <ClInclude Include="src\GUI\ImGuiMan.h">
-      <Filter>GUI</Filter>
+      <Filter>src\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\DirectX12\CommandQueue.h">
+      <Filter>src\Graphics\DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\DirectX12\DescriptorHeap.h">
+      <Filter>src\Graphics\DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\DirectX12\Fence.h">
+      <Filter>src\Graphics\DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\DirectX12\GraphicsDevice.h">
+      <Filter>src\Graphics\DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\DirectX12\SwapChain.h">
+      <Filter>src\Graphics\DirectX12</Filter>
     </ClInclude>
     <ClInclude Include="src\Graphics\GraphicsContext.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\GraphicsDevice.h">
-      <Filter>Graphics</Filter>
+      <Filter>src\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Graphics\SceneGraph\SceneGraph.h">
-      <Filter>Graphics\SceneGraph</Filter>
+      <Filter>src\Graphics\SceneGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\InputHandler.h">
+      <Filter>src\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\RawInputHandler.h">
+      <Filter>src\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Platform.h">
-      <Filter>Platform</Filter>
+      <Filter>src\Platform</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\Windows\PlatformWin32.h">
-      <Filter>Platform\Windows</Filter>
+    <ClInclude Include="src\pch.h">
+      <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\Graphics\DirectX12\DescriptorHeapTemplate.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
-      <Filter>Core</Filter>
+      <Filter>src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Exception.cpp">
+      <Filter>src\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Log.cpp">
-      <Filter>Core</Filter>
+      <Filter>src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DSAL\EventQueue.cpp">
+      <Filter>src\DSAL</Filter>
     </ClCompile>
     <ClCompile Include="src\GUI\ImGuiMan.cpp">
-      <Filter>GUI</Filter>
+      <Filter>src\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DirectX12\CommandQueue.cpp">
+      <Filter>src\Graphics\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DirectX12\DescriptorHeap.cpp">
+      <Filter>src\Graphics\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DirectX12\Fence.cpp">
+      <Filter>src\Graphics\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DirectX12\GraphicsDevice.cpp">
+      <Filter>src\Graphics\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DirectX12\SwapChain.cpp">
+      <Filter>src\Graphics\DirectX12</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\GraphicsContext.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\GraphicsDevice.cpp">
-      <Filter>Graphics</Filter>
+      <Filter>src\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\SceneGraph\SceneGraph.cpp">
-      <Filter>Graphics\SceneGraph</Filter>
+      <Filter>src\Graphics\SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\InputHandler.cpp">
+      <Filter>src\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\RawInputHandler.cpp">
+      <Filter>src\Input</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Platform.cpp">
-      <Filter>Platform</Filter>
+      <Filter>src\Platform</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\Windows\PlatformWin32.cpp">
-      <Filter>Platform\Windows</Filter>
+    <ClCompile Include="src\pch.cpp">
+      <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\pch.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

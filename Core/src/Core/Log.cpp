@@ -2,7 +2,7 @@
 #include "Log.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 
-namespace Growing::Core {
+namespace Developing::Core {
     void Log::Init() {
         spdlog::set_pattern("%^[%T] %n: %v%$");
 
@@ -14,6 +14,9 @@ namespace Growing::Core {
 
         s_GraphicsLogger = spdlog::stdout_color_mt("Graphics");
         s_GraphicsLogger->set_level(spdlog::level::level_enum::trace);
+
+        s_PlatformLogger = spdlog::stdout_color_mt("Platform");
+        s_PlatformLogger->set_level(spdlog::level::level_enum::trace);
 
         s_ClientLogger = spdlog::stdout_color_mt("Client");
         s_ClientLogger->set_level(spdlog::level::level_enum::trace);
