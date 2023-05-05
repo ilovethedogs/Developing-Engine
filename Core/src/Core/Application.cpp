@@ -3,8 +3,6 @@
 
 #include "Platform/Platform.h"
 #include "Graphics/GraphicsContext.h"
-#include "Graphics/DirectX12/CommandQueue.h"
-#include "Graphics/DirectX12/DescriptorHeap.h"
 
 Developing::Core::Application::Application() {
     width = 1600;
