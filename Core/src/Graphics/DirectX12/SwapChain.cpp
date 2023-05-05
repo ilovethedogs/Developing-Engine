@@ -24,7 +24,7 @@ namespace Developing::Graphics {
         sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD; 
         sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-        p_device->GetDxgi()->CreateSwapChain(p_cmdQueue->GetCmdQueue(), &sd, _swapChain.ReleaseAndGetAddressOf());
+        p_device->_dxgi->CreateSwapChain(p_cmdQueue->_cmdQueue.Get(), &sd, _swapChain.ReleaseAndGetAddressOf());
 
         for (auto i {0}; i != NUM_BACK_BUFFERS; ++i)
             _swapChain->GetBuffer(i, IID_PPV_ARGS(&_renderTarget[i]));

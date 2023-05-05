@@ -1,12 +1,9 @@
 #pragma once
 
-#include <d3d12.h>
-#include <dxgi.h>
-
 namespace Developing::Graphics {
     class GraphicsDevice;
     class CommandQueue;
-    class WindowData;
+    struct WindowData;
 
     class SwapChain {
     public:
@@ -23,11 +20,11 @@ namespace Developing::Graphics {
         
         [[nodiscard]] uint16_t GetCurrentBufferIndex() const { return _bufferIdx; }
         [[nodiscard]] uint16_t GetNumOfBuffers() const { return NUM_BACK_BUFFERS; }
-    private:
+    public:
         static constexpr uint16_t NUM_BACK_BUFFERS {3};
         Microsoft::WRL::ComPtr<IDXGISwapChain> _swapChain;
         Microsoft::WRL::ComPtr<ID3D12Resource> _renderTarget[NUM_BACK_BUFFERS];
-        uint16_t                               _bufferIdx;
+        uint16_t                               _bufferIdx {};
     };
 }
 

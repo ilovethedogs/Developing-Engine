@@ -45,6 +45,12 @@
     <ClInclude Include="src\DSAL\EventQueue.h">
       <Filter>src\DSAL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EntryPoint.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\GUI\ImGuiMan.h">
       <Filter>src\GUI</Filter>
     </ClInclude>
@@ -81,7 +87,6 @@
     <ClInclude Include="src\pch.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphics\DirectX12\DescriptorHeapTemplate.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">

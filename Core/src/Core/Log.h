@@ -54,6 +54,13 @@ namespace Developing::Core {
 #define PLATFORM_ERROR(...)      ::Developing::Core::Log::GetPlatformLogger()->error(__VA_ARGS__)
 #define PLATFORM_FATAL(...)      ::Developing::Core::Log::GetPlatformLogger()->fatal(__VA_ARGS__)
 
+// Clinet log macros
+#define CLIENT_TRACE(...)      ::Developing::Core::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define CLIENT_INFO(...)       ::Developing::Core::Log::GetClientLogger()->info(__VA_ARGS__)
+#define CLIENT_WARN(...)       ::Developing::Core::Log::GetClientLogger()->warn(__VA_ARGS__)
+#define CLIENT_ERROR(...)      ::Developing::Core::Log::GetClientLogger()->error(__VA_ARGS__)
+#define CLIENT_FATAL(...)      ::Developing::Core::Log::GetClientLogger()->fatal(__VA_ARGS__)
+
 // Throw Exception
 #ifdef GW_PLATFORM_WINDOWS
 #define WND_EXCEPT(hr) PlatformWin32::HrException(__LINE__,__FILE__,hr)

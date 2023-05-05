@@ -1,6 +1,6 @@
 #pragma once
-#include <Core/Exception.h> 
 
+#include <Core/Exception.h> 
 #include <DSAL/EventQueue.h>
 
 namespace Developing::Platform {
@@ -23,7 +23,7 @@ namespace Developing::Platform {
             HINSTANCE hInst;
         };
     public:
-        Platform(int const width, int const height, char const* name);
+        Platform(int const width, int const height, char const* name = "window");
         virtual ~Platform();
 
         std::optional<int> PumpMessage();
@@ -34,23 +34,11 @@ namespace Developing::Platform {
 
         void SetWindowSize(int width, int height);
         void SetViewportSize(int width, int height);
-
-        void EnableCursor();
-        void DisableCursor();
-        void ClearKeyboard();
-        void ClearMouse();
-
-        std::optional<std::pair<int, int>> _ReadRawDelta();
     private:
         static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
         static LRESULT CALLBACK HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
         LRESULT HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
     private:
-        void ConfineCursor();
-        void HideCursor();
-        void FreeCursor();
-        void ShowCursor();
-
         void EnableImGuiMouse();
         void DisableImGuiMouse();
     private:
@@ -60,16 +48,6 @@ namespace Developing::Platform {
             WindowClass* wndClass;
             HWND hWnd {nullptr};
         } win32Data;
-
-        struct RawData {
-            int x;
-            int y;
-        };
-        DSAL::EventQueue<RawData, 16u> rawDeltaBuffer;
-        std::vector<BYTE> rawBuffer;
-    public:
-        inline static bool cursorEnabled {true};
-        inline static bool rawEnabled {false};
     public:
         class HrException final : public Core::Exception {
         public:

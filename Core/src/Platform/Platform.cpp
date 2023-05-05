@@ -5,6 +5,8 @@
 #include <imgui_impl_win32.h>
 
 #include "GUI/ImGuiMan.h"
+#include "Input/InputHandler.h"
+#include "Input/RawInputHandler.h"
 
 namespace Developing::Platform {
     Platform::WindowClass::WindowClass() noexcept
@@ -69,12 +71,8 @@ namespace Developing::Platform {
         } 
         */
 
-        RAWINPUTDEVICE rid;
-        rid.usUsagePage = 0x01;
-        rid.usUsage     = 0x02;
-        rid.dwFlags     = 0;
-        rid.hwndTarget  = nullptr;
-        CORE_ASSERT(RegisterRawInputDevices(&rid, 1, sizeof(rid)), "raw device init failed!");
+        Input::InputHandler::Init(win32Data.hWnd);
+        Input::RawInputHandler::Init();
 
         ShowWindow(win32Data.hWnd, SW_SHOWDEFAULT);
     }
@@ -132,7 +130,8 @@ namespace Developing::Platform {
         if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
             return true;
 
-        if (GUI::ImGuiMan::IsImguiEnabled()) [[likely]] {
+        //if (GUI::ImGuiMan::IsImguiEnabled()) [[likely]] {
+        if (true) [[likely]] {
             switch (msg) {
                 /* Window Resizing is currently disabled
                 // WINDOW RESIZE
@@ -154,32 +153,20 @@ namespace Developing::Platform {
                 case WM_KEYUP:
                 case WM_SYSKEYUP:
                 case WM_CHAR:
-                    //DirectX::Keyboard::ProcessMessage(msg, wParam, lParam);
+                    Input::InputHandler::ProcessKbdMsg(msg, wParam, lParam);
                     break;
                 case WM_MENUCHAR:
                     return MAKELRESULT(0, MNC_CLOSE);
                 // MOUSE
                 case WM_ACTIVATE:
                 case WM_ACTIVATEAPP:
-                    if (cursorEnabled) {
-                        if (wParam & WA_ACTIVE) {
-                            ConfineCursor(); 
-                            HideCursor();
-                        }
-                        else {
-                            FreeCursor(); 
-                            ShowCursor();
-                        }
-                    }
-                    //DirectX::Mouse::ProcessMessage(msg, wParam, lParam);
+                    Input::InputHandler::ToggleActivation(wParam & WA_ACTIVE, hWnd);
+                    Input::InputHandler::ProcessMouseMsg(msg, wParam, lParam);
                     break; 
                 case WM_LBUTTONDOWN:
                     SetForegroundWindow(hWnd);
-                    if (!cursorEnabled) {
-                        ConfineCursor();
-                        HideCursor();
-                    }
-                    //DirectX::Mouse::ProcessMessage(msg, wParam, lParam);
+                    Input::InputHandler::ButtonDown(hWnd);
+                    Input::InputHandler::ProcessMouseMsg(msg, wParam, lParam);
                     break; 
                 case WM_MOUSEMOVE:
                 case WM_LBUTTONUP:
@@ -191,97 +178,17 @@ namespace Developing::Platform {
                 case WM_XBUTTONDOWN:
                 case WM_XBUTTONUP:
                 case WM_MOUSEHOVER:
-                    //DirectX::Mouse::ProcessMessage(msg, wParam, lParam);
+                    Input::InputHandler::ProcessMouseMsg(msg, wParam, lParam);
                     break; 
                 case WM_MOUSEACTIVATE:
                     return MA_ACTIVATEANDEAT;
                 /*** RAW MOUSE INPUT ***/
-                case WM_INPUT: {
-                    if (!rawEnabled)
-                        break;
-
-                    UINT size;
-                    // first get the size of the input data
-                    if (GetRawInputData(
-                        reinterpret_cast<HRAWINPUT>(lParam),
-                        RID_INPUT,
-                        nullptr,
-                        &size,
-                        sizeof(RAWINPUTHEADER)) == -1) 
-                    {
-                        break;     
-                    }
-                    rawBuffer.resize(size);
-                    if (GetRawInputData(
-                        reinterpret_cast<HRAWINPUT>(lParam),
-                        RID_INPUT,
-                        rawBuffer.data(),
-                        &size,
-                        sizeof(RAWINPUTHEADER)) == -1) 
-                    {
-                        break;     
-                    }
-
-                    // process the data
-                    auto& ri {reinterpret_cast<RAWINPUT const&>(*rawBuffer.data())};
-                    if (ri.header.dwType == RIM_TYPEMOUSE && ri.data.mouse.lLastX != 0 || ri.data.mouse.lLastY)
-                        rawDeltaBuffer.push<RawData>(ri.data.mouse.lLastX, ri.data.mouse.lLastY);
-                    break;
-                }
+                case WM_INPUT:
+                    Input::RawInputHandler::ProcessRawInput(msg, wParam, lParam);
+                    break; 
             }
         }
         return DefWindowProc(hWnd, msg, wParam, lParam);
-    }
-
-    void Platform::EnableCursor() {
-        cursorEnabled = true;
-        ShowCursor();
-        EnableImGuiMouse();
-        FreeCursor();
-    }
-
-    void Platform::DisableCursor() {
-        cursorEnabled = false;
-        HideCursor();
-        DisableImGuiMouse();
-        ConfineCursor();
-    }
-
-    void Platform::ClearKeyboard() {
-        //kbd->Reset();
-    }
-
-    void Platform::ClearMouse() {
-        //mouse->ResetScrollWheelValue();
-    }
-
-    /*
-    std::optional<std::pair<int, int>> Platform::ReadRawDelta() {
-        if (rawDeltaBuffer.empty()) [[unlikely]]
-            return std::nullopt;
-        auto const d {rawDeltaBuffer.front()};
-        rawDeltaBuffer.pop();
-        return std::pair<int, int>{d.x, d.y};
-    }
-    */
-
-    void Platform::ConfineCursor() {
-        RECT r;
-        GetClientRect(win32Data.hWnd, &r);
-        MapWindowPoints(win32Data.hWnd, nullptr, reinterpret_cast<POINT*>(&r), 2);
-        ClipCursor(&r);
-    }
-
-    void Platform::HideCursor() {
-        while (::ShowCursor(FALSE) >= 0);
-    }
-
-    void Platform::FreeCursor() {
-        ClipCursor(nullptr);
-    }
-
-    void Platform::ShowCursor() {
-        while (::ShowCursor(TRUE) < 0);
     }
 
     void Platform::EnableImGuiMouse() {

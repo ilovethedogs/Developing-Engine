@@ -113,7 +113,8 @@
     <ClInclude Include="src\Core\Exception.h" />
     <ClInclude Include="src\Core\Log.h" />
     <ClInclude Include="src\DSAL\EventQueue.h" />
-    <ClInclude Include="src\Graphics\DirectX12\DescriptorHeapTemplate.h" />
+    <ClInclude Include="src\Engine.h" />
+    <ClInclude Include="src\EntryPoint.h" />
     <ClInclude Include="src\GUI\ImGuiMan.h" />
     <ClInclude Include="src\Graphics\DirectX12\CommandQueue.h" />
     <ClInclude Include="src\Graphics\DirectX12\DescriptorHeap.h" />

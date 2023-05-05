@@ -95,7 +95,7 @@ project "Testbed"
     }
 
     includedirs {
-        "Developing/src",
+        "Core/src/",
     }
 
     links {
@@ -111,7 +111,7 @@ project "Testbed"
     filter "system:windows"
         systemversion "latest"
         defines {
-            "GW_PLATFORM_WINDOWS",
+            "PLATFORM_WINDOWS",
         }
 
     filter "configurations:Debug"

@@ -1,9 +1,5 @@
 #pragma once
 
-#include <d3dx12/d3dx12.h>
-#include <d3d12.h>
-#include <dxgi.h>
-
 namespace Developing::Graphics {
     class GraphicsDevice {
     public:
@@ -12,7 +8,7 @@ namespace Developing::Graphics {
 
         [[nodiscard]] IDXGIFactory* GetDxgi() const { return _dxgi.Get(); }
         [[nodiscard]] ID3D12Device* GetDevice() const { return _device.Get(); }
-    private:
+    public:
         Microsoft::WRL::ComPtr<ID3D12Debug>   _debug;
         Microsoft::WRL::ComPtr<IDXGIFactory>  _dxgi;
         Microsoft::WRL::ComPtr<ID3D12Device>  _device;

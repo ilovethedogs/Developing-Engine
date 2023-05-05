@@ -10,11 +10,11 @@ namespace Developing {
     }
 
     namespace Graphics {
-        class GraphicsDevice;
+        class GraphicsContext;
     }
 }
 
-namespace Growing::Core {
+namespace Developing::Core {
     class Application {
     public:
         Application();
@@ -25,6 +25,17 @@ namespace Growing::Core {
 
         int Run();
     protected:
+        virtual void ProcessInput();
+        virtual void Update(float const dt);
+        virtual void Render();
+    protected:
+        inline static int width {};
+        inline static int height {};
+    private:
+        std::unique_ptr<Platform::Platform> p_platform;
+        std::unique_ptr<Graphics::GraphicsContext> p_gfx;
     };
+
+    [[nodiscard]] Application* CreateApp();
 }
 

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <d3d12.h>
-
 namespace Developing::Graphics {
     class GraphicsDevice;
     class SwapChain;
@@ -14,10 +12,11 @@ namespace Developing::Graphics {
 
         [[nodiscard]] ID3D12CommandQueue* GetCmdQueue() const { return _cmdQueue.Get(); }
 
-        void BeginFrame(SwapChain& _swapChain, D3D12_VIEWPORT const& vp, D3D12_RECT const& rect);
-        void EndFrame();
-        void WaitSync();
-    private:
+        void ClearQueue();
+        void SetResourceBarriers(UINT num_barriers, D3D12_RESOURCE_BARRIER const* p_barriers);
+        void SetViewPorts(UINT num_viewports, D3D12_VIEWPORT const* p_viewports);
+        void SetScissorRects(UINT num_rects, D3D12_RECT const* p_rects);
+    public:
         Microsoft::WRL::ComPtr<ID3D12CommandQueue>        _cmdQueue;
         Microsoft::WRL::ComPtr<ID3D12CommandAllocator>    _cmdAllocator;
         Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> _cmdList;

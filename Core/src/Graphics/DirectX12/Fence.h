@@ -1,20 +1,18 @@
 #pragma once
 
-#include <d3d12.h>
-
 namespace Developing::Graphics {
     class GraphicsDevice;
     class CommandQueue;
 
     class Fence {
     public:
-        Fence(GraphicsDevice& _device);
+        Fence(std::unique_ptr<GraphicsDevice> const& p_device);
         ~Fence();
 
-        void SetSignal(CommandQueue& _cmdQueue);
-        void SetSignalNext(CommandQueue& _cmdQueue);
+        void SetSignal(std::unique_ptr<CommandQueue> const& p_cmdQueue);
+        void SetSignalNext(std::unique_ptr<CommandQueue> const& p_cmdQueue);
         void Wait();
-    private:
+    public:
         Microsoft::WRL::ComPtr<ID3D12Fence> _fence;
         uint32_t                            _fenceValue  {0};
         HANDLE                              _fenceHandle {INVALID_HANDLE_VALUE};
