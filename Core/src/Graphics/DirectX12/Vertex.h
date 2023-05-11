@@ -114,9 +114,9 @@ namespace Developing::Graphics::Vertex {
                 0};
         }
     private:
-        Type type;
-        UINT semanticIndex;
-        UINT offset;
+        Type _type;
+        UINT _index;
+        UINT _offset;
     };
 
     class Layout {
@@ -127,7 +127,7 @@ namespace Developing::Graphics::Vertex {
 
         template <Element::Type T>
         [[nodiscard]] Element const& Resolve(size_t i = 0u) const {
-            for (auto const& e : elements) {
+            for (auto const& e : _elements) {
                 auto cnt {0u};
                 if (e.GetType() == T) {
                     if (cnt == i)
@@ -136,21 +136,21 @@ namespace Developing::Graphics::Vertex {
                 }
             } 
             CORE_ASSERT(false, "Element Resolving Failed!");
-            return elements.front();
+            return _elements.front();
         }
 
         [[nodiscard]] Element const& At(size_t const i) const;
 
         [[nodiscard]] std::vector<D3D12_INPUT_ELEMENT_DESC> GenerateLayout() const;
         [[nodiscard]] size_t GetNumOfElem() const;
-        [[nodiscard]] size_t SizeBytes() const;
+        [[nodiscard]] size_t GetStride() const;
         [[nodiscard]] std::string GetCode() const;
     private:
-        std::string code {};
-        std::vector<Element> elements;
-        std::array<UINT, Element::ELEMENT_TYPE_SIZE> semanticIndex;
-        UINT offset;
-        size_t bytes;
+        std::string _code {};
+        std::vector<Element> _elements;
+        std::array<UINT, Element::ELEMENT_TYPE_SIZE> _index;
+        UINT _offset;
+        size_t _stride;
     };
 
     class Vertex {
@@ -159,7 +159,7 @@ namespace Developing::Graphics::Vertex {
 
         template <Element::Type T>
         [[nodiscard]] auto& GetAttr(size_t i = 0u) {
-            auto pAttr {addr + layout->Resolve<T>(i).GetOffset()};
+            auto pAttr {_addr + _layout->Resolve<T>(i).GetOffset()};
             return *reinterpret_cast<typename Element::Lookup<T>::sys_type*>(pAttr);
         }
 
@@ -171,8 +171,8 @@ namespace Developing::Graphics::Vertex {
 
         template <typename T>
         void SetAttributes(size_t idx, T&& value) {
-            auto const& elem {layout->At(idx)};
-            auto const loc {addr + elem.GetOffset()};
+            auto const& elem {_layout->At(idx)};
+            auto const loc {_addr + elem.GetOffset()};
             switch (elem.GetType()) {
             #define F(x) case Element::##x: SetAttribute<Element::##x>(loc, std::forward<T>(value)); break;
                 VERTEX_ELEMENT_TYPE
@@ -192,8 +192,8 @@ namespace Developing::Graphics::Vertex {
                 CORE_ASSERT(false, "Parameter attribute type mismatch");
         }
     private:
-        char* addr;
-        Layout const* layout;
+        char* _addr;
+        Layout const* _layout;
     };
 
     class Buffer {
@@ -209,28 +209,28 @@ namespace Developing::Graphics::Vertex {
         [[nodiscard]] size_t GetNumOfVertices() const;
 
         [[nodiscard]] Vertex operator[](size_t i) noexcept {
-		    CORE_ASSERT(i < num_of_vertices, "invalid index!");
-			return Vertex{&buf[layout.GetNumOfElem() * i], &layout};
+		    CORE_ASSERT(i < _numOfVertices, "invalid index!");
+			return Vertex{&_buf[_layout.GetNumOfElem() * i], &_layout};
         }
 
         template <typename ...Params>
         void Append(Params&&... params) noexcept {
-            CORE_ASSERT(sizeof...(params) == layout.GetNumOfElem(), "Params count doesn't match number of vertex elements!"); 
-            CORE_ASSERT(num_of_vertices < capacity, "Buffer Overflow!"); 
-            ++num_of_vertices;
-            Vertex{top, &layout}.SetAttributes(0u, std::forward<Params>(params)...);
-            top += layout.SizeBytes();
+            CORE_ASSERT(sizeof...(params) == _layout.GetNumOfElem(), "Params count doesn't match number of vertex _elements!"); 
+            CORE_ASSERT(_numOfVertices < _capacity, "Buffer Overflow!"); 
+            ++_numOfVertices;
+            Vertex{_top, &_layout}.SetAttributes(0u, std::forward<Params>(params)...);
+            _top += _layout.GetStride();
         }
     private:
         /**
          * Stack
          */
-        char* buf {};
-        char* top {nullptr};
-        size_t size_bytes;
-        Layout layout {};
-        size_t capacity;
-        size_t num_of_vertices;
+        char* _buf {};
+        char* _top {nullptr};
+        size_t _sizeBytes;
+        Layout _layout {};
+        size_t _capacity;
+        size_t _numOfVertices;
     };
 }
 

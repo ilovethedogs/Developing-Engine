@@ -3,7 +3,7 @@
 
 #include "Graphics/DirectX12/Bindable/BindableResolver.h"
 
-Developing::Graphics::Topology::Topology(D3D12_PRIMITIVE_TOPOLOGY type)
+Developing::Graphics::Topology::Topology(GraphicsContext& gfx, D3D12_PRIMITIVE_TOPOLOGY type)
     : _type{type}
 {
 }
@@ -11,8 +11,8 @@ Developing::Graphics::Topology::Topology(D3D12_PRIMITIVE_TOPOLOGY type)
 void Developing::Graphics::Topology::Bind(GraphicsContext& gfx) noexcept {
 }
 
-std::shared_ptr<Developing::Graphics::Topology> Developing::Graphics::Topology::Resolve(D3D12_PRIMITIVE_TOPOLOGY type) {
-    return BindableResolver::Resolve<Topology>(type);
+std::shared_ptr<Developing::Graphics::Topology> Developing::Graphics::Topology::Resolve(GraphicsContext& gfx, D3D12_PRIMITIVE_TOPOLOGY type) {
+    return BindableResolver::Resolve<Topology>(gfx, type);
 }
 
 std::string Developing::Graphics::Topology::GenerateUID(D3D12_PRIMITIVE_TOPOLOGY type) {

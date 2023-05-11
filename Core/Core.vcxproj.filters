@@ -57,7 +57,7 @@
     <ClInclude Include="src\Graphics\DirectX12\CommandQueue.h">
       <Filter>src\Graphics\DirectX12</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphics\DirectX12\Bindable\DescHeap\DescriptorHeap.h">
+    <ClInclude Include="src\Graphics\DirectX12\Bindable\Descriptor\DescriptorHeap.h">
       <Filter>src\Graphics\DirectX12</Filter>
     </ClInclude>
     <ClInclude Include="src\Graphics\DirectX12\Fence.h">
@@ -87,20 +87,27 @@
     <ClInclude Include="src\pch.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphics\DirectX12\RootSignature.h" />
+    <ClInclude Include="src\Graphics\DirectX12\Bindable\Pipeline\RootSignature\RootSignature.h" />
     <ClInclude Include="src\Graphics\DirectX12\Bindable\Topology.h" />
     <ClInclude Include="src\Graphics\DirectX12\Bindable\Viewport.h" />
     <ClInclude Include="src\Graphics\DirectX12\Bindable\ScissorRect.h" />
     <ClInclude Include="src\Graphics\DirectX12\Bindable\Bindable.h" />
-    <ClInclude Include="src\Graphics\DirectX12\Bindable\DescHeap\RenderTargetView.h" />
-    <ClInclude Include="src\Graphics\DirectX12\Bindable\DescHeap\DepthStencilView.h" />
-    <ClInclude Include="src\Graphics\DirectX12\Bindable\Shader\VertexShader.h" />
-    <ClInclude Include="src\Graphics\DirectX12\Bindable\Shader\PixelShader.h" />
+    <ClInclude Include="src\Graphics\DirectX12\Bindable\Descriptor\RenderTargetView.h" />
+    <ClInclude Include="src\Graphics\DirectX12\Bindable\Descriptor\DepthStencilView.h" />
+    <ClInclude Include="src\Graphics\DirectX12\Bindable\Pipeline\Shader\VertexShader.h" />
+    <ClInclude Include="src\Graphics\DirectX12\Bindable\Pipeline\Shader\PixelShader.h" />
     <ClInclude Include="src\Util\StringConverter.h" />
     <ClInclude Include="src\Graphics\DirectX12\Vertex.h" />
     <ClInclude Include="src\Graphics\DirectX12\Bindable\BindableResolver.h" />
-    <ClInclude Include="src\Graphics\DirectX12\Bindable\InputLayout.h" />
-    <ClInclude Include="src\Graphics\DirectX12\Bindable\VertexBuffer.h" />
+    <ClInclude Include="src\Graphics\DirectX12\Bindable\Pipeline\InputLayout.h" />
+    <ClInclude Include="src\Graphics\DirectX12\Bindable\Resource\Buffer\VertexBuffer.h" />
+    <ClInclude Include="src\Graphics\DirectX12\Bindable\Resource\Resource.h" />
+    <ClInclude Include="src\Graphics\DirectX12\Bindable\Pipeline\Pipeline.h" />
+    <ClInclude Include="src\Graphics\DirectX12\RenderPass\RenderPass.h" />
+    <ClInclude Include="src\Graphics\DirectX12\Bindable\Resource\Texture\RenderTarget.h" />
+    <ClInclude Include="src\Graphics\DirectX12\CommandList.h" />
+    <ClInclude Include="src\Graphics\DirectX12\CommandAllocator.h" />
+    <ClInclude Include="src\Graphics\DirectX12\Bindable\Resource\Buffer\Buffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -121,7 +128,7 @@
     <ClCompile Include="src\Graphics\DirectX12\CommandQueue.cpp">
       <Filter>src\Graphics\DirectX12</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\DirectX12\Bindable\DescHeap\DescriptorHeap.cpp">
+    <ClCompile Include="src\Graphics\DirectX12\Bindable\Descriptor\DescriptorHeap.cpp">
       <Filter>src\Graphics\DirectX12</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\DirectX12\Fence.cpp">
@@ -151,20 +158,27 @@
     <ClCompile Include="src\pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\DirectX12\RootSignature.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\Bindable\Pipeline\RootSignature\RootSignature.cpp" />
     <ClCompile Include="src\Graphics\DirectX12\Bindable\Topology.cpp" />
     <ClCompile Include="src\Graphics\DirectX12\Bindable\Viewport.cpp" />
     <ClCompile Include="src\Graphics\DirectX12\Bindable\ScissorRect.cpp" />
     <ClCompile Include="src\Graphics\DirectX12\Bindable\Bindable.cpp" />
-    <ClCompile Include="src\Graphics\DirectX12\Bindable\DescHeap\RenderTargetView.cpp" />
-    <ClCompile Include="src\Graphics\DirectX12\Bindable\DescHeap\DepthStencilView.cpp" />
-    <ClCompile Include="src\Graphics\DirectX12\Bindable\Shader\VertexShader.cpp" />
-    <ClCompile Include="src\Graphics\DirectX12\Bindable\Shader\PixelShader.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\Bindable\Descriptor\RenderTargetView.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\Bindable\Descriptor\DepthStencilView.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\Bindable\Pipeline\Shader\VertexShader.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\Bindable\Pipeline\Shader\PixelShader.cpp" />
     <ClCompile Include="src\Util\StringConverter.cpp" />
     <ClCompile Include="src\Graphics\DirectX12\Vertex.cpp" />
     <ClCompile Include="src\Graphics\DirectX12\Bindable\BindableResolver.cpp" />
-    <ClCompile Include="src\Graphics\DirectX12\Bindable\InputLayout.cpp" />
-    <ClCompile Include="src\Graphics\DirectX12\Bindable\VertexBuffer.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\Bindable\Pipeline\InputLayout.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\Bindable\Resource\Buffer\VertexBuffer.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\Bindable\Resource\Resource.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\Bindable\Pipeline\Pipeline.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\RenderPass\RenderPass.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\Bindable\Resource\Texture\RenderTarget.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\CommandList.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\CommandAllocator.cpp" />
+    <ClCompile Include="src\Graphics\DirectX12\Bindable\Resource\Buffer\Buffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

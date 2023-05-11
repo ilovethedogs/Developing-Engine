@@ -6,7 +6,7 @@ namespace Developing::Graphics {
     class DescriptorHeap : public Bindable {
     public:
         DescriptorHeap(uint16_t num);
-        virtual ~DescriptorHeap();
+        virtual ~DescriptorHeap() override = default;
 
         D3D12_CPU_DESCRIPTOR_HANDLE GetHandle(int16_t idx) const;
 

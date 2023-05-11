@@ -3,7 +3,7 @@
 
 #include "Graphics/DirectX12/Bindable/BindableResolver.h"
 
-Developing::Graphics::InputLayout::InputLayout(Vertex::Layout const& layout)
+Developing::Graphics::InputLayout::InputLayout(GraphicsContext& gfx, Vertex::Layout const& layout)
     : _layout{layout}
 {
     auto const desc {layout.GenerateLayout()};
@@ -14,11 +14,11 @@ Developing::Graphics::InputLayout::InputLayout(Vertex::Layout const& layout)
 void Developing::Graphics::InputLayout::Bind(GraphicsContext& gfx) noexcept {
 }
 
-std::shared_ptr<Developing::Graphics::InputLayout> Developing::Graphics::InputLayout::Resolve(Vertex::Layout const& layout, ID3DBlob* pVertexShaderByteCode) {
-    return BindableResolver::Resolve<InputLayout>(layout);
+std::shared_ptr<Developing::Graphics::InputLayout> Developing::Graphics::InputLayout::Resolve(GraphicsContext& gfx, Vertex::Layout const& layout, ID3DBlob* pVertexShaderByteCode) {
+    return BindableResolver::Resolve<InputLayout>(gfx, layout);
 }
 
-std::string Developing::Graphics::InputLayout::GenerateUID(Vertex::Layout const& layout, ID3DBlob* pVertexShaderByteCode) {
+std::string Developing::Graphics::InputLayout::GenerateUID(Vertex::Layout const& layout) {
     using namespace std::string_literals;
     return typeid(InputLayout).name() + "#"s + layout.GetCode();
 }

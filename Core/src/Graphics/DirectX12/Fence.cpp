@@ -1,11 +1,12 @@
 #include "pch.h"
 #include "Fence.h"
 
-#include "CommandQueue.h"
-#include "Graphics/DirectX12/GraphicsDevice.h"
+#include "GraphicsDevice.h"
+#include "Graphics/GraphicsContext.h"
+#include "Graphics/DirectX12/CommandQueue.h"
 
-Developing::Graphics::Fence::Fence(std::unique_ptr<GraphicsDevice> const& p_device) {
-    p_device->GetDevice()->CreateFence(0u, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(_fence.ReleaseAndGetAddressOf()));
+Developing::Graphics::Fence::Fence(GraphicsContext& gfx) {
+    gfx.GetDeviceImpl()->GetDevice()->CreateFence(0u, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(_fence.ReleaseAndGetAddressOf()));
     _fenceHandle = ::CreateEvent(nullptr, FALSE, FALSE, nullptr);
 }
 

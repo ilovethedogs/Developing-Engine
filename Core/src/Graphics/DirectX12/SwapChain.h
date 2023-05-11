@@ -1,13 +1,11 @@
 #pragma once
 
 namespace Developing::Graphics {
-    class GraphicsDevice;
-    class CommandQueue;
-    struct WindowData;
+    class GraphicsContext;
 
     class SwapChain {
     public:
-        SwapChain(std::unique_ptr<GraphicsDevice>& p_device, std::unique_ptr<CommandQueue>& p_cmdQueue, WindowData const& info);
+        SwapChain(GraphicsContext& gfx);
         ~SwapChain() = default;
 
         void Present();

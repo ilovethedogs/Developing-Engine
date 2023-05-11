@@ -1,12 +1,12 @@
 #pragma once
 
 namespace Developing::Graphics {
-    class GraphicsDevice;
+    class GraphicsContext;
     class CommandQueue;
 
     class Fence {
     public:
-        Fence(std::unique_ptr<GraphicsDevice> const& p_device);
+        Fence(GraphicsContext& gfx);
         ~Fence();
 
         void SetSignal(std::unique_ptr<CommandQueue> const& p_cmdQueue);

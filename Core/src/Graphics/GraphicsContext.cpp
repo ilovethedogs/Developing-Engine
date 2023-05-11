@@ -3,9 +3,10 @@
 
 #include "Graphics/DirectX12/GraphicsDevice.h"
 #include "Graphics/DirectX12/CommandQueue.h"
+#include "Graphics/DirectX12/CommandAllocator.h"
 #include "Graphics/DirectX12/Fence.h"
 #include "Graphics/DirectX12/SwapChain.h"
-#include "Graphics/DirectX12/Bindable/DescHeap/RenderTargetView.h"
+//#include "Graphics/DirectX12/Bindable/DescHeap/RenderTargetView.h"
 #include "Graphics/DirectX12/Bindable/Viewport.h"
 #include "Graphics/DirectX12/Bindable/ScissorRect.h"
 
@@ -13,9 +14,10 @@ Developing::Graphics::GraphicsContext::GraphicsContext(int width, int height, HW
     : _windowData{width, height, nativeWnd, windowed}
 {
     p_device = std::make_unique<GraphicsDevice>();
-    p_cmdQueue = std::make_unique<CommandQueue>(p_device);
-    p_fence = std::make_unique<Fence>(p_device);
-    p_swapChain = std::make_unique<SwapChain>(p_device, p_cmdQueue, _windowData);
+    p_cmdQueue = std::make_unique<CommandQueue>(*this, D3D12_COMMAND_LIST_TYPE_DIRECT);
+    p_cmdAllocator = std::make_unique<CommandAllocator>(*this, D3D12_COMMAND_LIST_TYPE_DIRECT);
+    p_fence = std::make_unique<Fence>(*this);
+    p_swapChain = std::make_unique<SwapChain>(*this);
     p_RTV = std::make_unique<RenderTargetView>(p_device, p_swapChain, 3);
 
     p_vp = std::make_unique<Viewport>(width, height);
@@ -25,12 +27,24 @@ Developing::Graphics::GraphicsContext::GraphicsContext(int width, int height, HW
 Developing::Graphics::GraphicsContext::~GraphicsContext() {
 }
 
-std::unique_ptr<Developing::Graphics::SwapChain>& Developing::Graphics::GraphicsContext::GetSwapChain() {
+std::unique_ptr<Developing::Graphics::GraphicsDevice>& Developing::Graphics::GraphicsContext::GetDeviceImpl() {
+    return p_device;
+}
+
+std::unique_ptr<Developing::Graphics::CommandQueue>& Developing::Graphics::GraphicsContext::GetCommandQueueImpl() {
+    return p_cmdQueue;
+}
+
+std::unique_ptr<Developing::Graphics::SwapChain>& Developing::Graphics::GraphicsContext::GetSwapChainImpl() {
     return p_swapChain;
 }
 
 ID3D12GraphicsCommandList& Developing::Graphics::GraphicsContext::GetCmdList() {
-    return *p_cmdQueue->_cmdList.Get();
+    //return *p_cmdQueue->_cmdList.Get();
+}
+
+Developing::Graphics::WindowData& Developing::Graphics::GraphicsContext::GetWindowData() {
+    return _windowData;
 }
 
 void Developing::Graphics::GraphicsContext::Render() {
@@ -39,8 +53,8 @@ void Developing::Graphics::GraphicsContext::Render() {
 }
 
 void Developing::Graphics::GraphicsContext::BeginFrame() {
-    p_cmdQueue->_cmdAllocator->Reset();
-    p_cmdQueue->_cmdList->Reset(p_cmdQueue->_cmdAllocator.Get(), nullptr);
+    p_cmdAllocator->Reset();
+    //p_cmdQueue->_cmdList->Reset(p_cmdQueue->_cmdAllocator.Get(), nullptr);
 
     D3D12_RESOURCE_BARRIER barrier {
         CD3DX12_RESOURCE_BARRIER::Transition(

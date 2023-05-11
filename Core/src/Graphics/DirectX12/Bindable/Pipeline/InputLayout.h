@@ -6,13 +6,13 @@
 namespace Developing::Graphics {
     class InputLayout : public Bindable {
     public:
-        InputLayout(Vertex::Layout const& layout);
+        InputLayout(GraphicsContext& gfx, Vertex::Layout const& layout);
         virtual ~InputLayout() override = default;
 
         void Bind(GraphicsContext& gfx) noexcept override;
 
-        [[nodiscard]] static std::shared_ptr<InputLayout> Resolve(Vertex::Layout const& layout, ID3DBlob* pVertexShaderByteCode);
-        [[nodiscard]] static std::string GenerateUID(Vertex::Layout const& layout, ID3DBlob* pVertexShaderByteCode = nullptr);
+        [[nodiscard]] static std::shared_ptr<InputLayout> Resolve(GraphicsContext& gfx, Vertex::Layout const& layout, ID3DBlob* pVertexShaderByteCode);
+        [[nodiscard]] static std::string GenerateUID(Vertex::Layout const& layout);
         [[nodiscard]] std::string GetUID() const noexcept override;
     private:
         Vertex::Layout _layout;

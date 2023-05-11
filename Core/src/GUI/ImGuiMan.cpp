@@ -38,7 +38,7 @@ namespace Developing::GUI {
         ImGui_ImplWin32_Init(platform.GetNativeWnd());
         /*
         ImGui_ImplDX12_Init(
-            gfx.GetDevice(),
+            gfx.GetDeviceImpl(),
             gfx.GetNumOfBackBuffers(),
         );
         */

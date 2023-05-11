@@ -4,13 +4,13 @@
 
 namespace Developing::Graphics::Vertex {
     Element::Element(Type type, UINT semantic_index, UINT offset)
-        : type{type}, semanticIndex{semantic_index}, offset(offset)
+        : _type{type}, _index{semantic_index}, _offset(offset)
     {
     }
 
     D3D12_INPUT_ELEMENT_DESC Element::GetDesc() const {
-        switch (type) {
-        #define F(x) case x: return GenerateDesc<x>(semanticIndex, offset);
+        switch (_type) {
+        #define F(x) case x: return GenerateDesc<x>(_index, _offset);
             VERTEX_ELEMENT_TYPE
         #undef F
         default:
@@ -20,11 +20,11 @@ namespace Developing::Graphics::Vertex {
     }
 
     size_t Element::GetOffset() const {
-        return offset;
+        return _offset;
     }
 
     Element::Type Element::GetType() const {
-        return type;
+        return _type;
     }
 
     constexpr UINT Element::Size(Type type) {
@@ -50,70 +50,70 @@ namespace Developing::Graphics::Vertex {
     }
 
     Layout& Layout::Append(Element::Type type) {
-        elements.emplace_back(type, semanticIndex[type], offset);
-        offset += Element::Size(type);
-        ++semanticIndex[type];
-        code += Element::GetCode(type);
+        _elements.emplace_back(type, _index[type], _offset);
+        _offset += Element::Size(type);
+        ++_index[type];
+        _code += Element::GetCode(type);
 
         return *this;
     }
 
     Element const& Layout::At(size_t const i) const {
-        return elements[i];
+        return _elements[i];
     }
 
     std::vector<D3D12_INPUT_ELEMENT_DESC> Layout::GenerateLayout() const {
         std::vector<D3D12_INPUT_ELEMENT_DESC> result;
-        result.reserve(elements.size());
-        std::ranges::transform(elements, std::back_inserter(result), [](auto& e) {
+        result.reserve(_elements.size());
+        std::ranges::transform(_elements, std::back_inserter(result), [](auto& e) {
             return e.GetDesc();
         });
         return result;
     }
 
     size_t Layout::GetNumOfElem() const {
-        return elements.size();
+        return _elements.size();
     }
 
-    size_t Layout::SizeBytes() const {
-        return offset;
+    size_t Layout::GetStride() const {
+        return _offset;
     }
 
     std::string Layout::GetCode() const {
-        return code;
+        return _code;
     }
 
     Vertex::Vertex(char* _addr, Layout const* layout)
-        : addr{_addr}, layout{layout}
+        : _addr{_addr}, _layout{layout}
     {
     }
 
     Buffer::Buffer(Layout layout, size_t capacity)
-        : layout{layout}, capacity{capacity}
+        : _layout{layout}, _capacity{capacity}
     {
-        size_bytes = sizeof(char) * layout.SizeBytes() * capacity;
-        buf = new char[size_bytes];
-        top = buf;
+        _sizeBytes = sizeof(char) * layout.GetStride() * capacity;
+        _buf = new char[_sizeBytes];
+        _top = _buf;
     }
 
     void Buffer::Destroy() {
-        delete buf;
-        buf = nullptr;
+        delete _buf;
+        _buf = nullptr;
     }
 
     size_t Buffer::GetSizeBytes() const {
-        return size_bytes;
+        return _sizeBytes;
     }
 
     char const* Buffer::GetData() const {
-        return const_cast<char*>(buf);
+        return const_cast<char*>(_buf);
     }
 
     Layout const& Buffer::GetLayout() const {
-        return layout;
+        return _layout;
     }
 
     size_t Buffer::GetNumOfVertices() const {
-        return num_of_vertices;
+        return _numOfVertices;
     }
 }

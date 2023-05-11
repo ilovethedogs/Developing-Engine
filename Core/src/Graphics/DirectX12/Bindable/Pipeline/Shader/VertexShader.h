@@ -12,11 +12,11 @@ namespace Developing::Graphics {
 
         void Bind(GraphicsContext& gfx) noexcept override;
 
-        [[nodiscard]] static std::shared_ptr<VertexShader> Resolve( std::string const& path);
+        [[nodiscard]] static std::shared_ptr<VertexShader> Resolve(GraphicsContext& gfx, char const* path);
         [[nodiscard]] static std::string GenerateUID(std::string const& path);
         [[nodiscard]] std::string GetUID() const noexcept override;
     private:
-        std::string path;
+        std::string _path;
         Microsoft::WRL::ComPtr<ID3DBlob> p_blob;
         struct D3D12_SHADER_BYTECODE _byteCode;
     };
